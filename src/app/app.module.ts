@@ -10,6 +10,8 @@ import { RouterModule } from "@angular/router";
 import { appRoutes } from "./app.routes";
 import { HomeComponent } from "./pages/home/home.component";
 import { CheckSalaryComponent } from './pages/check-salary/check-salary.component';
+import { HttpClientModule } from '@angular/common/http';
+import { ServiceService } from './service/service.service';
 
 @NgModule({
   declarations: [
@@ -21,11 +23,12 @@ import { CheckSalaryComponent } from './pages/check-salary/check-salary.componen
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     FormsModule,
     HttpModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [],
+  providers: [ServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
