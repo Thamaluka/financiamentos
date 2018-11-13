@@ -2,8 +2,8 @@
  * Created by andrew.yang on 5/18/2017.
  */
 import { OnInit, Component } from "@angular/core";
-import { ServiceService } from "app/service/service.service";
-import { Router } from "@angular/router";
+import { HomeServiceService } from "./home-service.service";
+import { Table } from "app/models/table";
 
 
 @Component({
@@ -11,13 +11,23 @@ import { Router } from "@angular/router";
     templateUrl: './home.component.html'
 })
 export class HomeComponent implements OnInit {
-    constructor(public service: ServiceService, private router: Router) { }
 
+    private table = new Table;
+
+
+    constructor(private service: HomeServiceService) { }
+    
     ngOnInit() {
-        this.service.getName('Jessica').subscribe((data) => {
-            console.log(data);
-        })
+       /*  this.service.getTable().subscribe((res) => {
+            this.teste = res;
+            console.log(res);
+        }, err => {
+            console.log(err);
+        }); */
     }
 
+    teste(){
+        console.log(this.table.valorDoImovel)
+    }
 
 }

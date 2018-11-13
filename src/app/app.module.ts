@@ -11,7 +11,7 @@ import { appRoutes } from "./app.routes";
 import { HomeComponent } from "./pages/home/home.component";
 import { CheckSalaryComponent } from './pages/check-salary/check-salary.component';
 import { HttpClientModule } from '@angular/common/http';
-import { ServiceService } from './service/service.service';
+import { HomeServiceService } from './pages/home/home-service.service';
 
 @NgModule({
   declarations: [
@@ -26,9 +26,10 @@ import { ServiceService } from './service/service.service';
     HttpClientModule,
     FormsModule,
     HttpModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    HttpClientModule
   ],
-  providers: [ServiceService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  providers: [HomeServiceService]
 })
 export class AppModule { }
