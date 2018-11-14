@@ -1,6 +1,8 @@
 export class Table {
     valorDoImovel: number;
     taxa: number;
-    parcelas = [];
+    totalParcela:number;
+    parcelas? = [];
     valorDaEntrada: number;
+    date?= [];
 }

@@ -18,11 +18,11 @@ export class HomeServiceService {
     return body || {};
   }
 
-  getTable(): Observable<any> {
-    return this.http.get(this.apiUrl + '/table?name='+'Jessica', this.httpOptions).pipe(
+  sendTable(table): Observable<any> {
+    return this.http.get(this.apiUrl + '/table?valorDoImovel=' + table.valorDoImovel + '&taxa=' + table.taxa + '&parcelas=' + table.totalParcela + '&valorDaEntrada=' + table.valorDaEntrada, this.httpOptions).pipe(
       map(this.extractData));
   }
 
-  
+
 
 }

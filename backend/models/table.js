@@ -1,7 +1,10 @@
 class Table {
 
-    constructor(name) {
-        this.name = name;
+    constructor(valorDoImovel) {
+        this.valorDoImovel = valorDoImovel;
+        this.taxa = taxa;
+        this.parcelas = parcelas;
+        this.valorDaEntrada = valorDaEntrada;
     }
 };
 module.exports = Table;
