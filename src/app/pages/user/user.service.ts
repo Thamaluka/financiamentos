@@ -22,7 +22,7 @@ export class UserService {
     }
 
     sendNewUser(user): Observable<any> {
-        return this.http.get(this.apiUrl + '/new?salario_usuario=' + user.salary + '&taxa_anual=' + user.taxaAnual + 'percentual_entrada=' +
+        return this.http.post(this.apiUrl + '/new?salario_usuario=' + user.salary + '&taxa_anual=' + user.taxaAnual + 'percentual_entrada=' +
             user.entrada + '&nome_completo=' + user.name + '&cpf=' + user.cpf + '&data_nascimento=' + user.dataNascimento + '&hasFgts=' + user.fgts + '&valorFgts=' + user.valorFgts, this.httpOptions).pipe(
                 map(this.extractData));
     }

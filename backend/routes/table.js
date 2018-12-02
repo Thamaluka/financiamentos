@@ -26,4 +26,38 @@ router.post('/new', function (req, res) {
   res.send('Sucess');
 });
 
+router.get('/check/:userId', function (req, res) {
+  var userId = req.params.userId;
+  var prazoFinanciamento = req.query.prazoFinanciamento;
+  var valorImovel = req.query.valorImovel;
+  var connectUtils = require('../utils/connect');
+    con = connectUtils.connectDatabase();
+    con.query("SELECT * FROM `financiamento`.`operacao` WHERE id =  ? ", userId, function (err, result) {             
+        if(err) {
+            console.log("error: ", err);
+        }
+        else{
+            user = result[0]
+            logicResult = tools.calcularParcelasByUser(user, valorImovel, prazoFinanciamento);
+            res.send(logicResult);
+        }
+    }); 
+});
+
+
+router.get('/operations', function (req, res) {
+  var offset = req.query.offset;
+  var limit = req.query.limit;
+  var connectUtils = require('../utils/connect');
+    con = connectUtils.connectDatabase();
+    con.query("SELECT * FROM financiamento.operacao ORDER BY dataCriacao LIMIT "+limit+" OFFSET "+offset+";",function (err, result) {             
+        if(err) {
+            console.log("error: ", err);
+        }
+        else{
+            res.send(result);
+        }
+    }); 
+});
+
 module.exports = router;
