@@ -12,6 +12,9 @@ import { HomeComponent } from "./pages/home/home.component";
 import { CheckSalaryComponent } from './pages/check-salary/check-salary.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HomeServiceService } from './pages/home/home-service.service';
+import { UserComponent } from './pages/user/user.component';
+import { UserService } from './pages/user/user.service';
+
 
 @NgModule({
   declarations: [
@@ -19,7 +22,8 @@ import { HomeServiceService } from './pages/home/home-service.service';
     Navigation,
     Topnavbar,
     HomeComponent,
-    CheckSalaryComponent
+    CheckSalaryComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
@@ -30,6 +34,6 @@ import { HomeServiceService } from './pages/home/home-service.service';
     HttpClientModule
   ],
   bootstrap: [AppComponent],
-  providers: [HomeServiceService]
+  providers: [HomeServiceService, UserService]
 })
 export class AppModule { }

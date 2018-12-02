@@ -1,0 +1,129 @@
+<div class="wrapper wrapper-content">
+
+  <div class="row justify-content-center">
+    <div class="col col-lg-5">
+    </div>
+    <div class="col col-lg-6">
+      <h1>Cadastro Usuário</h1>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-8">
+
+      <form>
+        <div class="form-group">
+          <label for="name">Nome Completo</label>
+          <input name="nameUser" class="form-control" type="text" class="form-control" id="name" [(ngModel)]="user.name">
+        </div>
+
+        <div class="form-group">
+          <label for="cpf">CPF</label>
+          <input name="cpfUser" class="form-control" type="text" class="form-control" id="cpf" [(ngModel)]="user.cpf">
+        </div>
+
+        <div class="form-group">
+          <label for="salary">Salário</label>
+          <input name="salaryUser" class="form-control" type="text" class="form-control" id="salary" [(ngModel)]="user.salary">
+        </div>
+
+        <div class="form-group">
+          <label for="taxa">Taxa Anual</label>
+          <input name="taxaUser" class="form-control" type="text" class="form-control" id="taxa" [(ngModel)]="user.taxaAnual">
+        </div>
+
+        <div class="form-group">
+          <label for="entrada">Valor da Entrada</label>
+          <input name="entradaUser" class="form-control" type="text" class="form-control" id="entrada" [(ngModel)]="user.entrada">
+        </div>
+
+        <div class="form-group">
+          <label for="date">Data de Nascimento</label>
+          <input name="nascimentoUser" class="form-control" type="date" class="form-control" id="date" [(ngModel)]="user.dataNascimento">
+        </div>
+
+        <div class="form-group">
+          <label for="email">E-mail</label>
+          <input name="emailUser" class="form-control" type="email" class="form-control" id="email" [(ngModel)]="user.email">
+        </div>
+
+
+        <div class="form-check">
+          <input name="fgtsUser" class="form-control" type="checkbox" class="form-check-input" id="fgts" [(ngModel)]="user.fgts">
+          <label class="form-check-label" for="fgts">Possui FGTS?</label>
+        </div>
+
+        <div *ngIf="user.fgts">
+          <div class="form-group">
+            <label for="valorFgts">Valor FGTS</label>
+            <input name="valorFgtsUser" class="form-control" type="text" class="form-control" id="valorFgts"
+              [(ngModel)]="user.valorFgts">
+          </div>
+        </div>
+
+
+        <div class="row">
+
+          <div class="col-lg-9">
+          </div>
+          <div class="col-lg-1">
+            <button type="submit" class="btn btn-primary" (click)="sendNewUser()">Submit</button>
+          </div>
+        </div>
+
+
+      </form>
+
+    </div>
+  </div>
+
+  <div *ngIf="users.lenght >0">
+    <div class="row justify-content-center">
+      <div class="col col-lg-5">
+      </div>
+      <div class="col col-lg-6">
+        <h1>Lista de Usuários</h1>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-lg-2"></div>
+
+      <div class="col-lg-8">
+        <table class="table table-sm">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Nome Completo</th>
+              <th scope="col">CPF</th>
+              <th scope="col">Data de Nascimento</th>
+              <th scope="col">Salario</th>
+              <th scope="col">% Entrada</th>
+              <th scope="col">Taxa Anual</th>
+              <th scope="col">FGTS</th>
+              <th scope="col">Valor Maximo da Parcela</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let data of users">
+              <th scope="row">1</th>
+              <td>Mark</td>
+              <td>Otto</td>
+              <td>@mdo</td>
+              <td>Otto</td>
+              <td>@mdo</td>
+              <td>Otto</td>
+              <td>@mdo</td>
+              <td>@mdo</td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
