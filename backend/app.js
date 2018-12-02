@@ -1,14 +1,15 @@
 var createError = require('http-errors');
 var express = require('express');
+var cors = require('cors');
+
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var cors = require('cors');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var table = require('./routes/table');
-var app = express()
+var app = express();
 
 
 
@@ -41,5 +42,14 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+app.all('*', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+});
+
+app.use(cors());
+app.use(express.static('public'));
 
 module.exports = app;

@@ -1,83 +1,41 @@
 module.exports = {
 
-    calcularParcelas: function calculoParcelas(table) {
-        let financiamento = table.valorDoImovel - table.valorDaEntrada;
-        let numeroParcelas = table.parcelas;
-        let amortizacao = financiavel / numeroParcelas;
-        let taxa = table.taxa;
-        let today = new Date();
-        let day = today.getUTCDay();
-        let month = today.getMonth();
-        let year = today.getFullYear();
-        let parcelas = [];
-        let dataInicial = day + '/' + month + '/' + year;
-
-        for (let i = 0; i < numeroParcelas; i++) {
-            let numero = '';
-            let saldoDevedor = '';
-            let juros = '';
-            let valorParcela = '';
-            let dataParcela = '';
-
-            if (i == 0) {
-                numero = i + 1;
-                saldoDevedor = financiavel;
-                juros = Math.round((saldoDevedor * taxa) * 100) / 100;
-                valorParcela = Math.round((juros + amortizacao) * 100) / 100;
-                dataParcela = dataInicial;
-
-                parcelas.push({
-                    numero,
-                    saldoDevedor,
-                    juros,
-                    valorParcela,
-                    dataParcela
-                });
-            } else {
-                numero = i + 1;
-                saldoDevedor = Math.round((parcelas[i - 1].saldoDevedor - amortizacao) * 100) / 100;
-                juros = Math.round((saldoDevedor * taxa) * 100) / 100;
-                valorParcela = Math.round((juros + amortizacao) * 100) / 100;
-                dataParcela = this.calculoDataParcelas(parcelas[i - 1].dataParcela);
-
-                parcelas.push({
-                    numero,
-                    saldoDevedor,
-                    juros,
-                    valorParcela,
-                    dataParcela
-                });
-            }
+    calcularParcelas: function calculoParcelas(valor_imovel, taxa_juro, percentual_entrada, qt_parcelas) {
+        valor_imovel = valor_imovel - (percentual_entrada * 100);
+        var amortizacao = valor_imovel / qt_parcelas;
+        response = [];
+        var parcela = { saldo_devedor: valor_imovel, ordem: 1 };
+        response.push(parcela);
+        for (var i = 0; i <= qt_parcelas; i++) {
+            var juros = valor_imovel * (taxa_juro / 100);
+            valor_imovel = valor_imovel - amortizacao
+            var valorParcela = amortizacao + juros
+            var parcela_sac = { saldo_devedor: valor_imovel, ordem: i, juros: juros, amortizacao: amortizacao, prestacao: valorParcela };
+            response.push(parcela_sac);
         }
-        return dataParcela;
+        return response;
     },
-    calculoDataParcelas: function calculoDataParcelas(data) {
-        //transforma data que vem em string para formato Date do javascript
-        let dia = data.substring(0, 2);
-        let mes = data.substring(3, 5);
-        let ano = data.substring(6, 10);
-        let dataAnterior = new Date(ano, mes, dia);
+    createOperation: function createOperation(salarioUsuario, taxaAnual, percentualEntrada, nomeCompleto, cpf, dataNascimento, hasFgts, valorFgts, email) {
 
-        //Calculo da nova data
-        let novoMes = (dataAnterior.getMonth() + 1) % 13;
-        let novoAno = dataAnterior.getFullYear() + (((dataAnterior.getMonth() + 1) - novoMes) / 12);
-        let novoDia = dia;
+        var connectUtils = require('./connect');
+        con = connectUtils.connectDatabase();
 
-        novoMes = this.correcaoMes(novoMes);
-        let dataParcela = novoDia + '/' + novoMes + '/' + novoAno;
+        con.connect(function (err) {
+            if (err) throw err;
+            console.log("Connected!");
+            var todayDate = new Date().toISOString().slice(0, 10);
+            var sql = "INSERT INTO `financiamento`.`operacao` (`salarioUsuario`, `taxaAnual`, `percentualEntrada`, `valorMaximoParcela`, `nomeCompleto`, `cpf`, `dataNascimento`, `hasFgts`, `valorFgts`, `dataCriacao`, `email`) VALUES ( '" + salarioUsuario + "', '" + taxaAnual + "', '" + percentualEntrada + "', '" + salarioUsuario / 100 * 30 + "', '" + nomeCompleto + "', '" + cpf + "', '" + dataNascimento + "', '" + hasFgts + "', '" + valorFgts + "', '" + todayDate + "', '" + email + "');";
+            con.query(sql, function (err, result) {
+                if (err) {
+                    console.log(err)
+                    throw err;
+                }
+                con.end();
+                console.log("1 record inserted");
+            });
+        });
 
-        return dataParcela;
-    },
-    correcaoMes: function correcaoMes(mes) {
-        if (isNaN(mes)) return false;
-        //Se for menor que dez 1~9, adiciona o 0 antes do numero;
-        return mes < 10 ? "0" + mes : mes;
-    },
-    
-    verificaSalario: function verificaSalario(salario, valorParcela) {
-        salario = salario * 0.3;
-        if (salario > valorParcela) return true;
-        else return false;
+        return "Teste";
     }
 
 }

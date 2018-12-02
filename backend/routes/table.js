@@ -1,22 +1,29 @@
 var express = require('express');
 var router = express.Router();
-var table = require('../models/table');
-var calcular = require('../utils/calular');
+var tools = require('../utils/calular');
+var cors = require('cors');
 
-/* GET users listing. */
-router.get('/', function (req, res) {
-  this.table.valorDoImovel = req.query.valorDoImovel;
-  this.table.taxa = req.query.taxa;
-  this.table.parcelas = req.query.parcelas;
-  this.table.valorDaEntrada = req.query.valorDaEntrada;
 
-  res.send(this.table);
+router.get('/', cors(), function (req, res) {
+  var response = tools.calcularParcelas(req.query.valorDoImovel, req.query.taxa, req.query.valorDaEntrada, req.query.parcelas)
+  console.log('response')
+  res.send(this.response);
 });
 
 /* GET users listing. */
 router.post('/new', function (req, res) {
-  console.log(req.body);
-  res.send();
+  var response = tools.createOperation(
+    req.query.salario_usuario,
+    req.query.taxa_anual,
+    req.query.percentual_entrada,
+    req.query.nome_completo,
+    req.query.cpf,
+    req.query.data_nascimento,
+    req.query.hasFgts,
+    req.query.valorFgts,
+    req.query.email
+  )
+  res.send('Sucess');
 });
 
 module.exports = router;

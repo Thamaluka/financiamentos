@@ -24,10 +24,7 @@
                             <h5>Taxa de Juros (%)</h5>
                         </div>
                         <div class="ibox-content">
-                            <select class="custom-select" id="inputGroupSelect02" #selectedTaxa (change)="selectedTaxa.value">
-                                <option selected>Taxas ao mês</option>
-                                <option name="taxas" *ngFor="let taxa of taxas" [value]="taxa">{{taxa}}% a.m</option>
-                            </select>
+                            <input name="taxa" type="text" class="form-control" aria-label="Amount" [(ngModel)]="table.taxa">
                         </div>
                     </div>
                 </div>
@@ -40,7 +37,7 @@
                             <h5>Parcelas</h5>
                         </div>
                         <div class="ibox-content">
-                                <input name="parcelas" type="text" class="form-control" aria-label="Amount" [(ngModel)]="table.totalParcela">
+                            <input name="parcelas" type="number" class="form-control" aria-label="Amount" [(ngModel)]="table.totalParcela">
                         </div>
                     </div>
                 </div>
@@ -65,7 +62,7 @@
                 <div class="col-lg-9">
                 </div>
                 <div class="col-lg-2">
-                    <button type="button" class="btn btn-success" [disabled]="!tableForm.form.valid" (click)="setTableData(selectedTaxa.value)">Submit</button>
+                    <button type="button" class="btn btn-success" [disabled]="!tableForm.form.valid" (click)="sendTable()">Submit</button>
                 </div>
             </div>
         </div>
@@ -74,7 +71,7 @@
 
         <div class="row">
 
-            <div *ngIf="table.length > 0">
+            <div *ngIf="table.parcelas.length > 0">
                 <div class="col-lg-12">
                     <div class="row">
                         <div class="col-lg-2"></div>
@@ -99,48 +96,25 @@
                                         <div class="col-lg-7">
 
                                             <table class="table table-hover margin bottom">
+
                                                 <thead>
                                                     <tr>
                                                         <th style="width: 1%" class="text-center">Parcelas</th>
                                                         <th class="text-center">Data</th>
+                                                        <th class="text-center">Juros</th>
                                                         <th class="text-center">Valor</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="text-center">1</td>
-                                                        <td class="text-center small">16 Jun 2014</td>
-                                                        <td class="text-center"><span class="label label-primary">$483.00</span></td>
 
-                                                    </tr>
+                                                <tbody *ngFor="let data of table.parcelas; let i = index ">
                                                     <tr>
-                                                        <td class="text-center">2</td>
-                                                        <td class="text-center small">10 Jun 2014</td>
-                                                        <td class="text-center"><span class="label label-primary">$327.00</span></td>
-
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-center">3</td>
-                                                        <td class="text-center small">12 Jun 2014</td>
-                                                        <td class="text-center"><span class="label label-primary">$125.00</span></td>
-
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-center">4</td>
-                                                        <td class="text-center small">22 Jun 2013</td>
-                                                        <td class="text-center"><span class="label label-primary">$344.00</span></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-center">5</td>
-                                                        <td class="text-center small">24 Jun 2013</td>
-                                                        <td class="text-center"><span class="label label-primary">$235.00</span></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-center">6</td>
-                                                        <td class="text-center small">26 Jun 2013</td>
-                                                        <td class="text-center"><span class="label label-primary">$100.00</span></td>
+                                                        <td class="text-center">{{i + 1}}</td>
+                                                        <td class="text-center small">{{table.date[i]}}</td>
+                                                        <td class="text-center">{{table.juros[i]}}</td>
+                                                        <td class="text-center"><span class="label label-primary">${{data}}</span></td>
                                                     </tr>
                                                 </tbody>
+
                                             </table>
                                         </div>
                                         <div class="col-lg-2"></div>
